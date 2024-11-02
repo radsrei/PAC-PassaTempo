@@ -1,10 +1,10 @@
-config ();
 
 
 
 
-const con = "./views/config/banco.js";
+const conn = "./views/config/banco.js";
 
+//conexao com o banco*//
 const { Sequelize } = require('sequelize');
 
 const con = new Sequelize('gestao_voluntarios', 'root', '', {
@@ -21,6 +21,6 @@ con.authenticate()
 con.sync()
   //.sync({ force: true }) // Use com cautela em ambiente de desenvolvimento
   .then(() => {
-    app.listen(8080, () => console.log('Servidor rodando na porta 8080.'));
+    app.listen(5050, () => console.log('Servidor rodando na porta 8080.'));
   })
   .catch((err) => console.error('Erro ao sincronizar com o banco de dados:', err));
