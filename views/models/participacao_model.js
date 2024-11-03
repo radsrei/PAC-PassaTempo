@@ -1,7 +1,7 @@
-import sequelize, { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import sequelize from "../config/banco.js";
 
-const Participacao = sequelize.default('participacap', {
+const Participacao = sequelize.define('participacao', {
 
     id_partici: {
         type: Sequelize.INTEGER,
@@ -36,4 +36,4 @@ const Participacao = sequelize.default('participacap', {
     }   
 })
 
-export default Participacao;
+export {Participacao};

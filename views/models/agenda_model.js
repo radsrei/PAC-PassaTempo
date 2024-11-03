@@ -44,4 +44,4 @@ const Agenda = sequelize.define('agenda', {
     }
  })
 
- export default Agenda;
+ export {Agenda};

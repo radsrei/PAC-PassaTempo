@@ -40,4 +40,4 @@ const Home = sequelize.define('home', {
 
 })
 
-export default Home;
+export {Home};

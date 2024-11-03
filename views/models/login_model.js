@@ -24,4 +24,4 @@ const Login = sequelize.define('login', {
 
 })
 
-export default Login;
+export {Login};

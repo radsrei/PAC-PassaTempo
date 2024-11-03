@@ -44,4 +44,4 @@ const Evento = sequelize.define('evento', {
 
 })
 
-export default Evento;
+export {Evento};

@@ -34,6 +34,17 @@
 
 // import sequelize from "./views/config/banco.js"
 
+import sequelize from "./views/config/banco.js";
+
+import { Voluntario } from "./views/models/voluntario_model.js";
+import { Participacao } from "./views/models/participacao_model.js";
+import { Login } from "./views/models/login_model.js";
+import { Home } from "./views/models/home_model.js";
+import { Evento } from "./views/models/evento_model.js";
+import { Agenda } from "./views/models/agenda_model.js";
+
+await sequelize.sync()
+
 import express from "express"
 
 
