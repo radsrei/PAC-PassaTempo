@@ -6,10 +6,13 @@ const conn = "./views/config/banco.js";
 
 //conexao com o banco*//
 const { Sequelize } = require('sequelize');
+const express = require('express');
+const app = express();
+
 
 const con = new Sequelize('gestao_voluntarios', 'root', '', {
   host: 'localhost',
-  dialect: 'mysql', // ou 'postgres', 'sqlite', 'mariadb', 'mssql', dependendo do banco de dados
+  dialect: 'mysql', 
 });
 
 // Testa a conexão com o banco de dados
@@ -21,6 +24,6 @@ con.authenticate()
 con.sync()
   //.sync({ force: true }) // Use com cautela em ambiente de desenvolvimento
   .then(() => {
-    app.listen(5050, () => console.log('Servidor rodando na porta 8080.'));
+    app.listen(5050, () => console.log('Servidor rodando na porta 5050.'));
   })
   .catch((err) => console.error('Erro ao sincronizar com o banco de dados:', err));
