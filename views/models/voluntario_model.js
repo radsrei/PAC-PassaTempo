@@ -34,4 +34,4 @@ const Voluntario = sequelize.define('voluntario', {
 
  })
 
- export default Voluntario;
+ export {Voluntario} ;
