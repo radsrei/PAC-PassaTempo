@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize';
 import sequelize from "../config/banco.js";
+import {Voluntario } from "../models/voluntario_model.js";
+import { Evento } from "../models/evento_model.js";
 
 const Participacao = sequelize.define('participacao', {
 
@@ -9,31 +11,31 @@ const Participacao = sequelize.define('participacao', {
         allowNull: false,
         primaryKey: true
     },
+         dt_cadastro:{
+         type: Sequelize.DATEONLY
+     }
+}) 
 
-    
-    id_voluntario: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'voluntario',
-            key: 'id_voluntario'
+    Voluntario.belongsToMany(Evento,{
+        through:{
+            model:Participacao
         },
-
-        onUpdate: 'CASCADE',  
-        onDelete: 'CASCADE'
-    },
-
-    id_evento: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'eventos',   
-            key: 'id_evento'    
+            foreignKey:'id_voluntario',
+            constraint: true
+        })
+  
+     Evento.belongsToMany(Voluntario,{
+        through:{
+            model:'Participacao',
         },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+            foreignKey:'id_evento',
+            constraint: true
+     })   
 
-    }   
-})
+// (async () => {
+//     await Voluntario.sync();
+//     await Evento.sync();
+//     await Participacao.sync();
+// }) ();
 
 export {Participacao};
