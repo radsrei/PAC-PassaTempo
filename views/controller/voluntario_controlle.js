@@ -1,24 +1,3 @@
-// import { where } from "sequelize";
-// import { Voluntario } from "../models/voluntario_model.js";
-
-// const voluntarioscon = {};
-
-// //GET
-// voluntarioscon.getVoluntario = async(req,res) => {
-//     try {
-        
-//         const voluntarios = await Voluntario.findAll()
-//         res.send(voluntarios) 
-
-//     } catch (error) {
-//         consle.error(error);
-//         res.status(500).json({ message: 'Erro ao buscar voluntários' });
-//     }
-// }
-
-// export { voluntarioscon };
-
-
 import { where } from "sequelize";
 import { Voluntario } from "../models/voluntario_model.js";
 
@@ -37,4 +16,23 @@ voluntario.getVoluntario = async (req, res) => {
     }
 };
 
+// Função para criar um novo voluntário
+voluntario.createVoluntario = async (req, res) => {
+    try {
+      const { nome_voluntario, email_voluntario, cpf_voluntario, evento_voluntario } = req.body;
+  
+      const novoVoluntario = await Voluntario.create({
+        nome_voluntario,
+        email: email_voluntario,
+        cpf: cpf_voluntario,
+        evento_voluntario,
+      });
+  
+      res.status(201).json(novoVoluntario);
+    } catch (error) {
+      console.error("Erro ao tentar adicionar um novo voluntário:", error);
+      
+    }
+  };
+  
 export { voluntario };
