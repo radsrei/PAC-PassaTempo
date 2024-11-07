@@ -73,4 +73,49 @@ voluntario.createVoluntario = async (req, res) => {
     }
 };
 
+// Função para atualizar um voluntário
+voluntario.updateVoluntario = async (req, res) => {
+    try {
+        const { id } = req.params; // Obtém o ID do voluntário a partir dos parâmetros da rota
+        const { nome, email, cpf, evento } = req.body; // Alinhe os campos com o model
+
+        await Voluntario.update(
+            {
+                nome,
+                email,
+                cpf,
+                evento,
+            },
+            { where: { id_voluntario: id } } // Use o campo id_voluntario para correspondência
+        );
+
+        const voluntarioAtualizado = await Voluntario.findByPk(id);
+        res.status(200).json(voluntarioAtualizado);
+    } catch (error) {
+        console.error("Erro ao atualizar voluntário:", error);
+        res.status(500).json({ message: 'Erro ao atualizar voluntário' });
+    }
+};
+
+// Função para deletar um voluntário
+voluntario.deleteVoluntario = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const deletado = await Voluntario.destroy({
+            where: { id_voluntario: id },
+        });
+
+        if (deletado) {
+            res.status(200).json({ message: "Voluntário deletado com sucesso" });
+        } else {
+            res.status(404).json({ message: "Voluntário não encontrado" });
+        }
+    } catch (error) {
+        console.error("Erro ao tentar deletar o voluntário:", error);
+        res.status(500).json({ message: "Erro ao tentar deletar o voluntário" });
+    }
+};
+
+
 export { voluntario };
