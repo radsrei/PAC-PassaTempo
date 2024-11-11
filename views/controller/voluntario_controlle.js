@@ -1,46 +1,40 @@
-// import { where } from "sequelize";
-// import { Voluntario } from "../models/voluntario_model.js";
-
-// const voluntario = {};
-
-// // GET
-// //esse volntario estou criando um objeto aqui agora. 
-// voluntario.getVoluntario = async (req, res) => {
-//     try {
-//         //esse 'voluntarios' com s no fim não existe.   
-//         const voluntarios = await Voluntario.findAll(); //esse voluntario com "V" maiusculo é da classe model. 
-//         res.send(voluntarios);
-//     } catch (error) {
-//         console.error("Erro ao buscar voluntários:", error); // Corrigido consle para console
-//         res.status(500).json({ message: 'Erro ao buscar voluntários' });
-//     }
-// };
-
-// // Função para criar um novo voluntário
-// voluntario.createVoluntario = async (req, res) => {
-//     try {
-//       const { nome_voluntario, email_voluntario, cpf_voluntario, evento_voluntario } = req.body;
-  
-//       const novoVoluntario = await Voluntario.create({
-//         nome_voluntario,
-//         email: email_voluntario,
-//         cpf: cpf_voluntario,
-//         evento_voluntario,
-//       });
-  
-//       res.status(201).json(novoVoluntario);
-//     } catch (error) {
-//       console.error("Erro ao tentar adicionar um novo voluntário:", error);
-      
-//     }
-//   };
-
-// export { voluntario };
-
 import { where } from "sequelize";
 import { Voluntario } from "../models/voluntario_model.js";
 
 const voluntario = {};
+
+voluntario.verificarVoluntario = async (req, res) => {
+    const { cpf, email } = req.body;
+  
+    // Validações de CPF e E-mail
+    if (!cpf) {
+      return res.status(422).json({ message: "O CPF é obrigatório" });
+    }
+    if (!email) {
+      return res.status(422).json({ message: "O e-mail é obrigatório" });
+    }
+  
+    try {
+      // Verificar se o voluntário com o CPF e e-mail fornecidos existe no banco de dados
+      const voluntarioExistente = await Voluntario.findOne({
+        where: {
+          cpf: cpf,
+          email: email,
+        },
+      });
+  
+      // Caso o voluntário exista, retorna a mensagem de confirmação
+      if (voluntarioExistente) {
+        return res.status(200).json({ message: "Voluntario encontrado, deseja participar deste evento?" });
+      } else {
+        // Caso não exista, solicita que informe o evento desejado
+        return res.status(404).json({ message: "Informe o evento que deseja participar" });
+      }
+    } catch (error) {
+      console.error("Erro ao verificar o voluntário:", error);
+      res.status(500).json({ message: 'Erro ao verificar o voluntário' });
+    }
+};
 
 // GET - Busca todos os voluntários
 voluntario.getVoluntario = async (req, res) => {
@@ -49,9 +43,9 @@ voluntario.getVoluntario = async (req, res) => {
         res.send(voluntarios);
     } catch (error) {
         console.error("Erro ao buscar voluntários:", error);
-        res.status(500).json({ message: 'Erro ao buscar voluntários' });
-    }
-};
+        res.status(500).json({ message: 'Erro ao buscar voluntários' })
+  };
+}
 
 // POST - Cria um novo voluntário
 voluntario.createVoluntario = async (req, res) => {
