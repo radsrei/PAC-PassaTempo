@@ -10,34 +10,18 @@ const Home = sequelize.define('home', {
         allowNull: false,
         primaryKey: true
     },
-
-    recado_um: {
+    recado: {
         type: Sequelize.STRING,
         allowNull: false
     },
-
-    recado_dois: {
+    tipo: {
         type: Sequelize.STRING,
         allowNull: false
     },
-
-    
-    comentario_um: {
-        type: Sequelize.STRING,
-        allowNull: false
+    ordem:{
+        type:Sequelize.INTEGER,
+        allowNull:false
     },
-
-    comentario_dois: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-
-    comentario_tres: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
-    
-
 })
 
 export {Home};
