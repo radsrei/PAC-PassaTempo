@@ -26,7 +26,8 @@ const Participacao = sequelize.define('participacao', {
   
      Evento.belongsToMany(Voluntario,{
         through:{
-            model:'Participacao',
+            model: Participacao,
+            //model: 'Participacao',
         },
             foreignKey:'id_evento',
             constraint: true
