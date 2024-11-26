@@ -17,6 +17,13 @@ evento.getEvento = async (req, res) => {
 evento.createEvento = async (req, res) => {
     try {
          const { nome_evento, categoria_evento, local, data, inicio, descricao } = req.body;
+
+          // Verificar se o nome do evento já existe
+        const eventoExistente = await Evento.findOne({ where: { nome_evento } });
+        if (eventoExistente) {
+            return res.status(400).json({ message: "O nome do evento já está cadastrado, informe um novo nome." });
+        }
+
          const novoEvento = await Evento.create({
             nome_evento, 
             categoria_evento, 
