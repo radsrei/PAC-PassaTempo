@@ -51,7 +51,10 @@ voluntario.getVoluntario = async (req, res) => {
 voluntario.createVoluntario = async (req, res) => {
     try {
         // Alinha os nomes dos campos com o modelo
-        const { nome, email, cpf, evento } = req.body;
+        let { nome, email, cpf, evento } = req.body;
+
+        //converter nome para caixa alta
+        nome = nome.toUpperCase();
 
         const novoVoluntario = await Voluntario.create({
             nome,
