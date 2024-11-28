@@ -12,15 +12,15 @@ const Home = sequelize.define('home', {
     },
     recado: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     tipo: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     },
     ordem:{
         type:Sequelize.INTEGER,
-        allowNull:false
+        allowNull:true
     },
 })
 

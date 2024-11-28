@@ -1,16 +1,40 @@
-import { where } from "sequelize";
 import { Home } from "../models/home_model.js";
 
+const MensagemDescri = async (req, res) => {
+    try {
+        const { recado } = req.body;
+        console.log(recado)
+        const MensagemCurta = await Home.create({
+            recado, 
+            tipo: 1
+        })
 
-//Funcionalidades da Tela Home
-//Puxar recado
-//Salvar recado
-//Deletar recado
+        res.status(201).json(MensagemCurta);
 
+   } catch (error) {
+       console.error("Erro ao tentar adicionar um novo Descrição", error);
+       res.status(500).json({message: 'Erro ao criar Descrição'})
+   }
+}
 
-const home = {};
+const MensagemCurta = async (req, res) => {
+    try {
+        const { recado, ordem } = req.body;
+        const MensagemCurta = await Home.create({
+            recado, 
+            tipo: 2, 
+            ordem
+        })
 
-home.getHome = async (req, res) => {
+        res.status(201).json(MensagemCurta);
+
+   } catch (error) {
+       console.error("Erro ao tentar adicionar uma nova mensagem curta", error);
+       res.status(500).json({message: 'Erro ao criar mensagem curta'})
+   }
+}
+
+const getHome = async (req, res) => {
     try {
           const recado = await Home.findAll();
           res.send(recado);
@@ -21,28 +45,33 @@ home.getHome = async (req, res) => {
     };
 }
 
-home.updateHome = async (req,res) => {
+const updateHome = async (req, res) => {
     try {
         const { id } = req.params;
-        const { recado, tipo, ordem} = req.body;
+        const { recado, tipo, ordem } = req.body;
 
-        await Home.update({
-            recado, 
-            tipo,
-            ordem
-        }, 
-         { where: { id_home: id }}  
-    );
+        console.log('ID recebido:', id);
+        console.log('Dados recebidos no body:', req.body);
 
-    const homeAtualizado = await Home.findByPk(id);
-    res.status(200).json(homeAtualizado);
+        await Home.update(
+            { recado, tipo, ordem },
+            { where: { id_home: id } }
+        );
+
+        const homeAtualizado = await Home.findByPk(id);
+
+        if (!homeAtualizado) {
+            return res.status(404).json({ message: 'Registro não encontrado' });
+        }
+
+        res.status(200).json(homeAtualizado);
     } catch (error) {
-        console.error("Erro ao atualizar home:", error);
-        res.status(500).json({message: 'Erro ao atualizar home'});
+        console.error('Erro ao atualizar home:', error);
+        res.status(500).json({ message: 'Erro ao atualizar home' });
     }
 };
 
-home.deleteHome = async (req, res) => {
+const deleteHome = async (req, res) => {
     try {
         const { id } = req.params;
 
@@ -62,4 +91,4 @@ home.deleteHome = async (req, res) => {
     }
 };
 
-export { home };
+export { MensagemDescri, MensagemCurta, getHome, updateHome, deleteHome };
