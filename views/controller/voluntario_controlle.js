@@ -1,5 +1,7 @@
 import { where } from "sequelize";
 import { Voluntario } from "../models/voluntario_model.js";
+import { Evento } from "../models/evento_model.js";
+import sequelize from "../config/banco.js";
 
 const voluntario = {};
 
@@ -35,6 +37,26 @@ voluntario.verificarVoluntario = async (req, res) => {
       res.status(500).json({ message: 'Erro ao verificar o voluntário' });
     }
 };
+
+// Nova função para buscar os 10 voluntários mais ativos
+voluntario.getTopVoluntarios = async (req, res) => {
+  try {
+    const [results, metadata] = await sequelize.query(`
+      SELECT V.nome, V.cpf, COUNT(P.id_voluntario) AS qt_participacoes
+      FROM participacaos P
+      INNER JOIN voluntarios V ON V.id_voluntario = P.id_voluntario
+      GROUP BY V.nome, V.cpf
+      ORDER BY qt_participacoes DESC
+      LIMIT 10
+    `);
+
+    res.status(200).json(results); // Retorna os resultados como JSON
+  } catch (error) {
+    console.error("Erro ao buscar os voluntários:", error);
+    res.status(500).json({ message: "Erro ao buscar voluntários", details: error.message });
+  }
+};
+
 
 // GET - Busca todos os voluntários
 voluntario.getVoluntario = async (req, res) => {
