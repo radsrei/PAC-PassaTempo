@@ -57,6 +57,29 @@ voluntario.getTopVoluntarios = async (req, res) => {
   }
 };
 
+voluntario.getVoluntariosDisponiveis = async (req, res) => {
+  try {
+    const [voluntarios] = await sequelize.query(
+      `SELECT DISTINCT nome FROM voluntarios v ORDER BY nome`
+    );
+    res.status(200).json(voluntarios);
+  } catch (error) {
+    console.error('Erro ao buscar voluntários:', error);
+    res.status(500).json({ message: 'Erro ao buscar voluntários' });
+  }
+};
+
+voluntario.getTotalVoluntarios = async (req, res) =>{
+  try {
+      const [voluntarios] = await sequelize.query(
+          `select count(*) as count from voluntarios e `
+      );
+      res.status(200).json(voluntarios);
+  } catch (error) {
+      console.error('Erro ao buscar total voluntarios: ', error);
+      res.status(500).json({message: 'Erro ao buscar voluntarios'});
+  }
+}
 
 // GET - Busca todos os voluntários
 voluntario.getVoluntario = async (req, res) => {

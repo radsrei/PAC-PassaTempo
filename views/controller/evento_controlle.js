@@ -1,5 +1,6 @@
 import { where } from "sequelize";
 import { Evento } from "../models/evento_model.js";
+import sequelize from "../config/banco.js";
 
 const evento = {};
 
@@ -12,6 +13,30 @@ evento.getEvento = async (req, res) => {
         console.error("Erro ao buscar evento:", error);
         res.status(500).json({message: 'Erro ao buscar evento'})  
     };
+}
+
+evento.getDatasDisponiveis = async (req, res) => {
+    try {
+      const [datas] = await sequelize.query(
+        `SELECT DISTINCT DATE_FORMAT(e.data, '%m-%Y') as dt FROM eventos e ORDER BY dt`
+      );
+      res.status(200).json(datas);
+    } catch (error) {
+      console.error('Erro ao buscar datas:', error);
+      res.status(500).json({ message: 'Erro ao buscar datas' });
+    }
+  };
+
+evento.getTotalEventos = async (req, res) =>{
+    try {
+        const [eventos] = await sequelize.query(
+            `select count(*) as count from eventos e `
+        );
+        res.status(200).json(eventos);
+    } catch (error) {
+        console.error('Erro ao buscar total eventos: ', error);
+        res.status(500).json({message: 'Erro ao buscar eventos'});
+    }
 }
 
 evento.createEvento = async (req, res) => {
