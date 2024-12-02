@@ -4,11 +4,11 @@ import { participacao } from '../controller/participacao_controlle.js';
 
 const router = express.Router();
 
-router.get('/participacao', participacao.getParticipacao);
-router.post('/participacao', participacao.createParticipacao);
-router.put('/participacao/:id', participacao.updateParticipacao);
-router.delete('/participacao/:id', participacao.deleteParticipacao);
-router.get('/participacao/:id', participacao.getVoluntarioByIdComEventos);
+router.get('/participacao/buscar', participacao.getParticipacao);
+router.post('/participacao/criar', participacao.createParticipacao);
+router.patch('/participacao/editar/:id', participacao.updateParticipacao);
+router.delete('/participacao/deletar/:id', participacao.deleteParticipacao);
+router.get('/participacao/buscar/voluntario/:id', participacao.getVoluntarioEvento);
 
 
 export { router };
