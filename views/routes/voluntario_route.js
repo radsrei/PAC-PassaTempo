@@ -11,5 +11,8 @@ router.get('/voluntario/top', voluntario.getTopVoluntarios);
 router.get('/voluntario/nome', voluntario.getVoluntariosDisponiveis);
 router.get('/voluntario/total', voluntario.getTotalVoluntarios);
 
+router.get('/voluntario/top/:data?/:voluntario?', voluntario.getTopVoluntarios);
+// router.get('/voluntario/total/:data?/:voluntario?', voluntario.getTotalVoluntarios);
+
 
 export { router };

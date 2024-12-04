@@ -39,17 +39,37 @@ voluntario.verificarVoluntario = async (req, res) => {
 };
 
 // Nova função para buscar os 10 voluntários mais ativos
+// Endpoint para buscar voluntários com filtros pela URL
 voluntario.getTopVoluntarios = async (req, res) => {
+  const { data, voluntario } = req.params; // Filtros na URL
+
   try {
-    const [results, metadata] = await sequelize.query(`
+    let query = `
       SELECT V.nome, V.cpf, COUNT(P.id_voluntario) AS qt_participacoes
       FROM participacaos P
       INNER JOIN voluntarios V ON V.id_voluntario = P.id_voluntario
+      INNER JOIN eventos E ON E.id_evento = P.id_evento
+    `;
+
+    const filters = [];
+    if (data && data !== 'null') {
+      filters.push(`DATE_FORMAT(E.data, '%m-%Y') = '${data}'`);
+    }
+    if (voluntario && voluntario !== 'null') {
+      filters.push(`V.nome = '${voluntario}'`);
+    }
+
+    if (filters.length > 0) {
+      query += ' WHERE ' + filters.join(' AND ');
+    }
+
+    query += `
       GROUP BY V.nome, V.cpf
       ORDER BY qt_participacoes DESC
       LIMIT 10
-    `);
+    `;
 
+    const [results] = await sequelize.query(query);
     res.status(200).json(results); // Retorna os resultados como JSON
   } catch (error) {
     console.error("Erro ao buscar os voluntários:", error);

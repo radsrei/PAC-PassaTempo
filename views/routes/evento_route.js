@@ -12,5 +12,9 @@ router.get('/evento/data', evento.getDatasDisponiveis);
 router.get('/evento/total', evento.getTotalEventos);
 
 
+// router.get('/evento/total/:data?/:evento?', evento.getTotalEventos);
+
+
+
 
 export { router };
