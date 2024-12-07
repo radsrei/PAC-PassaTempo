@@ -10,4 +10,9 @@ A implementação deste PAC visa otimizar o controle diário de voluntários, te
 
 # Objetivo do app: facilitar o controle de inscrição de voluntários em eventos de arrecadação de materiais didáticos, facilitando também na divulgação deste eventos através da tela de agenda. Como extra foi adicionado a tela de home para adicionar recados e comentários de participações de outros voluntários. 
 
+# Para acessa ao ambiente do colaborador da Ong, deve acessar com a senha: 123 Login: teste@gmail.com
+
+
 # Para verificar o app basta baixar o visual studio code, após deve instalar as extinções, Node.Js, Mysql, após digitar o comando 'git pull' no terminal do studio code baixando ambos arquivos dos repositórios, após basta dar o comando 'npm start', juntamente com a appk anexada na entrega da atividade, assim baixando o app completo. 
+
+# Demais documentos anexados no PDF. 
