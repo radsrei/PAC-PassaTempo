@@ -16,3 +16,7 @@ A implementação deste PAC visa otimizar o controle diário de voluntários, te
 # Para verificar o app basta baixar o visual studio code, após deve instalar as extinções, Node.Js, Mysql, após digitar o comando 'git pull' no terminal do studio code baixando ambos arquivos dos repositórios, após basta dar o comando 'npm start', juntamente com a appk anexada na entrega da atividade, assim baixando o app completo. 
 
 # Demais documentos anexados no PDF. 
+
+# link do jira: https://catolicasc-pac4-passatempo.atlassian.net/jira/software/projects/PPPAC4/boards/2/timeline?assignee=712020%3Aa77d73c5-b18c-4d66-b1a2-ff3be007f7c6%2Cunassigned&cloudId=6e32f731-916d-4773-9bd6-d8fe7a6ba7e1&showAssignee=on&showDaysInColumn=on&showDueDate=on&showEpics=on&showEstimate=on&showIssueKey=on&showIssueLinksStats=off&showIssueType=on&showLabels=on&showPriority=on&showStatuses=on&showVersions=on
+
+# link do front: https://github.com/Luizmichels/PassaTempo 
