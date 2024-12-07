@@ -2,6 +2,8 @@ import express from "express";
 import sequelize from "./views/config/banco.js";
 import cors from "cors";
 
+import createDefaultAdminUser from './views/helpers/CriarUsarioAdim.js';
+
 // models
 import { Voluntario } from "./views/models/voluntario_model.js";
 import { Participacao } from "./views/models/participacao_model.js";
@@ -19,7 +21,7 @@ import { router as homeRouter } from "./views/routes/home_route.js";
 
 // conexão com o banco
 const index = express();
-index.use(cors());  // Usando CORS para permitir requisições de diferentes origens
+index.use(cors()); // Usando CORS para permitir requisições de diferentes origens
 index.use(express.json());
 index.use(express.urlencoded({ extended: true }));
 
@@ -30,11 +32,26 @@ index.use(eventoRouter);
 index.use(agendaRouter);
 index.use(homeRouter);
 
-// apagar e salvar banco
-// await sequelize.drop();
-await sequelize.sync();
-
 const PORT = process.env.PORT || 8080;
-index.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+
+// Função para inicializar o servidor
+const startServer = async () => {
+  try {
+    // Sincronizar o banco de dados
+    await sequelize.sync();
+
+    // Criar usuário admin padrão
+    await createDefaultAdminUser();
+
+    // Iniciar o servidor
+    index.listen(PORT, () => {
+      console.log(`Servidor rodando na porta ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Erro ao inicializar o servidor:", error);
+    process.exit(1); // Finaliza o processo em caso de erro
+  }
+};
+
+// Inicializar o servidor
+startServer();
